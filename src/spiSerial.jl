@@ -87,10 +87,10 @@ function spi_open(self::Pi, spi_channel, baud, spi_flags=0)
     # I p3 4
     ## extension ##
     # I spi_flags
-    extents=IOBuffer()
+    extents = IOBuffer()
     Base.write(extents, spi_flags::Cint)
     return _u2i(_pigpio_command_ext(
-        self.sl, _PI_CMD_SPIO, spi_channel, baud, 4, extents))
+        self.sl, _PI_CMD_SPIO, spi_channel, baud, 4, [extents]))
 end
 
 """
