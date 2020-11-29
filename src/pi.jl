@@ -128,11 +128,12 @@ function _pigpio_command_ext(sl, cmd, p1, p2, p3, extents, rl=true)
     end
     lock(sl.l)
     Base.write(sl.s, ext)
-    msg = reinterpret(Cuint, sl.s)[4]
+    out = IOBuffer(Base.read(sl.s, 16))
+    msg = reinterpret(Cuint, take!(out))[4]
     if rl
          unlock(sl.l)
     end
-    return res
+    return msg
 end
 
 """An ADT class to hold callback information
