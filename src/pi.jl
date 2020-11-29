@@ -124,10 +124,10 @@ function _pigpio_command_ext(sl, cmd, p1, p2, p3, extents, rl=true)
     ext = IOBuffer()
     Base.write(ext, Array(reinterpret(UInt8, [cmd, p1, p2, p3])))
     for x in extents
-       write(ext, string(x))
+       Base.write(ext, string(x))
     end
     lock(sl.l)
-    write(sl.s, ext)
+    Base.write(sl.s, ext)
     msg = reinterpret(Cuint, sl.s)[4]
     if rl
          unlock(sl.l)
@@ -1045,7 +1045,7 @@ function hardware_PWM(self::Pi, gpio, PWMfreq, PWMduty)
 ## extension ##
 # I PWMdutycycle
     extents = IOBuffer()
-    extents =write(extents, 10)
+    extents = Base.write(extents, 10)
     return _u2i(_pigpio_command_ext(
         self.sl, _PI_CMD_HP, gpio, PWMfreq, 4, extents))
 end

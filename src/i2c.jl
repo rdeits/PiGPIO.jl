@@ -146,7 +146,7 @@ function i2c_write_byte_data(self::Pi, handle, reg, byte_val)
     ## extension ##
     # I byte_val
     extents = IOBuffer
-    write(extents, byte_val)
+    Base.write(extents, byte_val)
     return _u2i(_pigpio_command_ext(
         self.sl, _PI_CMD_I2CWB, handle, reg, 4, extents))
 end
@@ -179,7 +179,7 @@ function i2c_write_word_data(self::Pi, handle, reg, word_val)
     ## extension ##
     # I word_val
     extents = IOBuffer
-    write(extents, word_val)
+    Base.write(extents, word_val)
     return _u2i(_pigpio_command_ext(
         self.sl, _PI_CMD_I2CWW, handle, reg, 4, extents))
 end
@@ -258,7 +258,7 @@ function i2c_process_call(self, handle, reg, word_val)
     ## extension ##
     # I word_val
     extents = IOBuffer
-    write(extents, word_val)
+    Base.write(extents, word_val)
     return _u2i(_pigpio_command_ext(
         self.sl, _PI_CMD_I2CPC, handle, reg, 4, extents))
 end
@@ -464,7 +464,7 @@ function i2c_read_i2c_block_data(self::Pi, handle, reg, count)
     ## extension ##
     # I count
     extents = IOBuffer()
-    write(extents, count)
+    Base.write(extents, count)
     # Don't raise exception.  Must release lock.
     bytes = u2i(_pigpio_command_ext(
     self.sl, _PI_CMD_I2CRI, handle, reg, 4, extents, false))
@@ -651,7 +651,7 @@ function bb_i2c_open(self::Pi, SDA, SCL, baud=100000)
     ## extension ##
     # I baud
     extents = IOBuffer()
-    write(extents, baud)
+    Base.write(extents, baud)
     return _u2i(_pigpio_command_ext(
         self.sl, _PI_CMD_BI2CO, SDA, SCL, 4, extents))
 end
